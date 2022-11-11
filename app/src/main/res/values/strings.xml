@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">NS Money Tracker</string>
+    <string name="show_random_number">Show Random Number</string>
+    <string name="_00">00</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new">Add New</string>
+    <string name="description">Description</string>
+    <string name="add_new_category">Add New Category</string>
+    <string name="close_button">Close Button</string>
+    <string name="category_name">Category Name</string>
+    <string name="save">Save</string>
+    <string name="no_category">No Category</string>
+    <string name="add_new_contact">Add New Contact</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="no_contact">No Contact</string>
+    <string name="payment_method_name">Payment Method Name</string>
+    <string name="add_new_payment_method">Add New Payment Method</string>
+    <string name="no_payment_method">No Payment Method</string>
+    <string name="customer">Customer</string>
+    <string name="supplier">Supplier</string>
+</resources>

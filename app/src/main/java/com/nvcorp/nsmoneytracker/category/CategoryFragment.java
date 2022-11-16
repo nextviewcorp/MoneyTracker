@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nvcorp.nsmoneytracker.R;
 import com.nvcorp.nsmoneytracker.databinding.FragmentCategoryBinding;
+import com.nvcorp.nsmoneytracker.transaction.AddNewTransactionFragment;
 
 import java.util.UUID;
 
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements OnSelectCategory{
 
     FragmentCategoryBinding binding;
 
@@ -95,9 +97,18 @@ public class CategoryFragment extends Fragment {
         binding.categoriesRv.setLayoutManager(layoutManager);
 
         categoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), categories -> {
-            categoryAdapter = new CategoryAdapter(getActivity(), categories);
+            categoryAdapter = new CategoryAdapter(getActivity(), categories, this);
             binding.categoriesRv.setAdapter(categoryAdapter);
         });
 
+    }
+
+    @Override
+    public void onSelectCategory(Category category) {
+        Bundle result = new Bundle();
+        result.putString("categoryId", category.getId());
+        result.putString("categoryName", category.getName());
+        getParentFragmentManager().setFragmentResult(AddNewTransactionFragment.CATEGORY_REQUEST_CODE, result);
+        getParentFragmentManager().popBackStack();
     }
 }

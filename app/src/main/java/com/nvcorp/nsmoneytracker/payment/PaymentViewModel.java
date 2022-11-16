@@ -31,7 +31,7 @@ public class PaymentViewModel extends AndroidViewModel {
         new InsertAsyncTask(paymentDao).execute(payment);
     }
 
-    LiveData<List<Payment>> getAllPayments() {
+    public LiveData<List<Payment>> getAllPayments() {
         return allPayments;
     }
 

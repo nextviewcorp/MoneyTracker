@@ -29,7 +29,7 @@ public class CategoryViewModel extends AndroidViewModel {
         new InsertAsyncTask(categoryDao).execute(category);
     }
 
-    LiveData<List<Category>> getAllCategories() {
+    public LiveData<List<Category>> getAllCategories() {
         return mAllCategories;
     }
 

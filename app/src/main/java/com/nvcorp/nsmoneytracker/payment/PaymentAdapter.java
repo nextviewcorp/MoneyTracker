@@ -18,10 +18,12 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentV
 
     Context context;
     List<Payment> paymentList;
+    OnSelectPayment onSelectPayment;
 
-    public PaymentAdapter(Context context, List<Payment> paymentList) {
+    public PaymentAdapter(Context context, List<Payment> paymentList, OnSelectPayment onSelectPayment) {
         this.context = context;
         this.paymentList = paymentList;
+        this.onSelectPayment = onSelectPayment;
     }
 
     @NonNull
@@ -36,6 +38,12 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentV
         Payment currentPayment = paymentList.get(position);
 
         holder.binding.paymentMethod.setText(currentPayment.getName());
+        holder.binding.paymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSelectPayment.onSelectPayment(currentPayment);
+            }
+        });
     }
 
     @Override

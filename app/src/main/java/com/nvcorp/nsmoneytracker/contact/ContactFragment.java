@@ -26,11 +26,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.nvcorp.nsmoneytracker.R;
 import com.nvcorp.nsmoneytracker.category.CategoryAdapter;
 import com.nvcorp.nsmoneytracker.databinding.FragmentContactBinding;
+import com.nvcorp.nsmoneytracker.transaction.AddNewTransactionFragment;
 
 import java.util.List;
 import java.util.UUID;
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment implements OnSelectContact {
 
     FragmentContactBinding binding;
 
@@ -113,9 +114,18 @@ public class ContactFragment extends Fragment {
         contactViewModel.getAllContacts().observe(getViewLifecycleOwner(), new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
-                contactAdapter = new ContactAdapter(getActivity(), contacts);
+                contactAdapter = new ContactAdapter(getActivity(), contacts, ContactFragment.this::onSelectContact);
                 binding.contactsRv.setAdapter(contactAdapter);
             }
         });
+    }
+
+    @Override
+    public void onSelectContact(Contact contact) {
+        Bundle result = new Bundle();
+        result.putString("contactId", contact.getId());
+        result.putString("contactName", contact.getName());
+        getParentFragmentManager().setFragmentResult(AddNewTransactionFragment.CONTACT_REQUEST_CODE, result);
+        getParentFragmentManager().popBackStack();
     }
 }

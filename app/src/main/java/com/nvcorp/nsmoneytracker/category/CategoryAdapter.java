@@ -2,6 +2,7 @@ package com.nvcorp.nsmoneytracker.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     Context context;
     List<Category> categoryList;
+    OnSelectCategory onSelectCategory;
 
-    public CategoryAdapter(Context context, List<Category> categoryList) {
+    public CategoryAdapter(Context context, List<Category> categoryList, OnSelectCategory onSelectCategory) {
         this.context = context;
         this.categoryList = categoryList;
+        this.onSelectCategory = onSelectCategory;
     }
 
     @NonNull
@@ -32,10 +35,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
-        if (categoryList.size() != 0) {
-            Category currentCategory = categoryList.get(position);
-            holder.binding.category.setText(currentCategory.getName());
-        }
+        Category currentCategory = categoryList.get(position);
+        holder.binding.category.setText(currentCategory.getName());
+        holder.binding.category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSelectCategory.onSelectCategory(currentCategory);
+            }
+        });
     }
 
     @Override

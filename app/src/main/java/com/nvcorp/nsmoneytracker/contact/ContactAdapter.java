@@ -9,32 +9,42 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nvcorp.nsmoneytracker.databinding.LayoutCategoryCellBinding;
+import com.nvcorp.nsmoneytracker.databinding.LayoutContactCellBinding;
 
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
-    LayoutCategoryCellBinding binding;
+    LayoutContactCellBinding binding;
 
     Context context;
     List<Contact> contactList;
+    OnSelectContact onSelectContact;
 
-    public ContactAdapter(Context context, List<Contact> contactList) {
+    public ContactAdapter(Context context, List<Contact> contactList, OnSelectContact onSelectContact) {
         this.context = context;
         this.contactList = contactList;
+        this.onSelectContact = onSelectContact;
     }
 
     @NonNull
     @Override
     public ContactAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = LayoutCategoryCellBinding.inflate(LayoutInflater.from(parent.getContext()),parent, false);
+        binding = LayoutContactCellBinding.inflate(LayoutInflater.from(parent.getContext()),parent, false);
         return new ContactViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactAdapter.ContactViewHolder holder, int position) {
         Contact currentContact = contactList.get(position);
-        holder.binding.category.setText(currentContact.getName() + " " + currentContact.getPhone() + " " + currentContact.getType());
+        holder.binding.contact.setText(currentContact.getName() + " " + currentContact.getPhone() + " " + currentContact.getType());
+
+        holder.binding.contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSelectContact.onSelectContact(currentContact);
+            }
+        });
     }
 
     @Override
@@ -44,9 +54,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
 
-        LayoutCategoryCellBinding binding;
+        LayoutContactCellBinding binding;
 
-        public ContactViewHolder(LayoutCategoryCellBinding binding) {
+        public ContactViewHolder(LayoutContactCellBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

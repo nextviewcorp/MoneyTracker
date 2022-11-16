@@ -14,6 +14,8 @@ import com.nvcorp.nsmoneytracker.category.CategoryViewModel;
 import com.nvcorp.nsmoneytracker.contact.ContactFragment;
 import com.nvcorp.nsmoneytracker.databinding.ActivityMainBinding;
 import com.nvcorp.nsmoneytracker.payment.PaymentFragment;
+import com.nvcorp.nsmoneytracker.transaction.AddNewTransactionFragment;
+import com.nvcorp.nsmoneytracker.transaction.TransactionFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        replaceFragment(new ContactFragment());
+        replaceFragment(new TransactionFragment());
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (TransactionFragment.onBackPressed != null ) {
+            TransactionFragment.onBackPressed.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     // Replace Fragments
@@ -39,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_manager, fragment);
         fragmentTransaction.addToBackStack("reverse");
         fragmentTransaction.commit();
+    }
+
+    public void onExit() {
+        MainActivity.this.finish();
+        System.exit(0);
     }
 
 }

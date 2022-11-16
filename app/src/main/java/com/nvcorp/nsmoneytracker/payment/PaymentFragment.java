@@ -27,10 +27,11 @@ import com.nvcorp.nsmoneytracker.category.Category;
 import com.nvcorp.nsmoneytracker.category.CategoryAdapter;
 import com.nvcorp.nsmoneytracker.category.CategoryViewModel;
 import com.nvcorp.nsmoneytracker.databinding.FragmentPaymentBinding;
+import com.nvcorp.nsmoneytracker.transaction.AddNewTransactionFragment;
 
 import java.util.UUID;
 
-public class PaymentFragment extends Fragment {
+public class PaymentFragment extends Fragment implements OnSelectPayment {
 
     FragmentPaymentBinding binding;
 
@@ -77,7 +78,7 @@ public class PaymentFragment extends Fragment {
 
                 if (paymentMethodName.equals("")) {
                     paymentMethodNameTIL.setErrorEnabled(true);
-                    paymentMethodNameTIL.setError("Please enter Category name.");
+                    paymentMethodNameTIL.setError("Please enter payment method name.");
                 } else {
                     paymentMethodNameTIL.setErrorEnabled(false);
                     String id = UUID.randomUUID().toString();
@@ -100,9 +101,18 @@ public class PaymentFragment extends Fragment {
         binding.paymentMethodsRv.setLayoutManager(layoutManager);
 
         paymentViewModel.getAllPayments().observe(getViewLifecycleOwner(), payments -> {
-            paymentAdapter = new PaymentAdapter(getActivity(), payments);
+            paymentAdapter = new PaymentAdapter(getActivity(), payments, this);
             binding.paymentMethodsRv.setAdapter(paymentAdapter);
         });
 
+    }
+
+    @Override
+    public void onSelectPayment(Payment payment) {
+        Bundle result = new Bundle();
+        result.putString("paymentId", payment.getId());
+        result.putString("paymentName", payment.getName());
+        getParentFragmentManager().setFragmentResult(AddNewTransactionFragment.PAYMENT_REQUEST_CODE, result);
+        getParentFragmentManager().popBackStack();
     }
 }

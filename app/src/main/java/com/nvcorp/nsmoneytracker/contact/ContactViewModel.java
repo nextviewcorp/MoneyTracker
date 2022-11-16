@@ -28,7 +28,7 @@ public class ContactViewModel extends AndroidViewModel {
         new InsertAsyncTask(contactDao).execute(contact);
     }
 
-    LiveData<List<Contact>> getAllContacts() {
+    public LiveData<List<Contact>> getAllContacts() {
         return allContacts;
     }
 

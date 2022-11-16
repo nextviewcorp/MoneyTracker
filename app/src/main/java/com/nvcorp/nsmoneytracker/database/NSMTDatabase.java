@@ -12,13 +12,16 @@ import com.nvcorp.nsmoneytracker.contact.Contact;
 import com.nvcorp.nsmoneytracker.contact.ContactDao;
 import com.nvcorp.nsmoneytracker.payment.Payment;
 import com.nvcorp.nsmoneytracker.payment.PaymentDao;
+import com.nvcorp.nsmoneytracker.transaction.Transaction;
+import com.nvcorp.nsmoneytracker.transaction.TransactionDao;
 
-@Database(entities = {Category.class, Contact.class, Payment.class}, version = 1)
+@Database(entities = {Category.class, Contact.class, Payment.class, Transaction.class}, version = 1)
 public abstract class NSMTDatabase extends RoomDatabase {
 
     public abstract CategoryDao categoryDao();
     public abstract ContactDao contactDao();
     public abstract PaymentDao paymentDao();
+    public abstract TransactionDao transactionDao();
 
     public static volatile NSMTDatabase nSMTDatabaseInstance;
 
